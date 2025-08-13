@@ -1,74 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Komal's Portfolio – NeuroDot</title>
-    <link rel="stylesheet" href="index.css">
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-    .dashboard img {
-    width: 500px;         /* set size */
-    height: auto;         /* keep proportions */
-    border-radius: 10px;  /* rounded corners */
-    display: block;       /* allows centering */
-    margin: auto;         /* center horizontally */
-  }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NeuroDot — AI Mental Wellness Dashboard</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0c0f12;
+  --card:#12161b;
+  --muted:#9aa4af;
+  --text:#e8eef6;
+  --primary:#2dd4bf;      
+  --primary-2:#60a5fa;   
+  --accent:#a78bfa;       
+  --ring: rgba(96,165,250,.45);
+  --radius:14px;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", sans-serif;
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(45,212,191,.18), rgba(0,0,0,0)) ,
+              radial-gradient(1400px 700px at 110% 10%, rgba(96,165,250,.12), rgba(0,0,0,0)) ,
+              var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.section{padding:64px 0}
+.kicker{letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:.78rem}
+
+nav{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter: blur(8px);
+  background: rgba(12,15,18,.65);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700}
+.brand-dot{width:10px;height:10px;border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, #fff, #2dd4bf 40%, #60a5fa 100%);
+  box-shadow:0 0 18px rgba(45,212,191,.6);
+}
+nav a{color:var(--text);text-decoration:none;font-size:.95rem;opacity:.9}
+nav a:hover{opacity:1}
+.nav-links{display:flex;gap:18px}
+
+
+.hero{padding:90px 0 70px}
+.hero h1{
+  font-family:"Space Grotesk",Inter,sans-serif;
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.1;
+  margin:10px 0 14px;
+  font-size:clamp(2rem, 3.2vw + 1rem, 3.2rem);
+}
+.hero p{color:#c7d2db;max-width:720px}
+
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 18px;border-radius:10px;
+  color:#0b1115;background:linear-gradient(135deg,var(--primary),var(--primary-2));
+  font-weight:600;text-decoration:none;border:none;cursor:pointer;
+  box-shadow:0 8px 24px rgba(96,165,250,.25);
+  transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(96,165,250,.32);}
+.btn:focus-visible{outline:3px solid var(--ring);outline-offset:4px}
+.btn.secondary{
+  background:#1b232c;color:var(--text);box-shadow:none;border:1px solid rgba(255,255,255,.08)
+}
+.btn.secondary:hover{filter:brightness(1.1)}
+
+
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+
+
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)) , var(--card);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.card-pad{padding:24px}
+
+
+.grid{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:18px
+}
+.col-4{grid-column:span 4}
+.col-6{grid-column:span 6}
+.col-12{grid-column:span 12}
+@media (max-width:900px){
+  .col-4,.col-6{grid-column:span 12}
+}
+
+
+.feature{display:flex;gap:14px}
+.ico{
+  width:40px;height:40px;flex:none;border-radius:10px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--primary) 0%, var(--accent) 100%);
+  color:#0b1115;font-weight:800;
+  box-shadow:0 8px 22px rgba(45,212,191,.25);
+}
+
+.preview-wrap{text-align:center}
+.preview-img{
+  width:100%;max-width:820px;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 16px 40px rgba(0,0,0,.35);
+  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+.preview-img:hover{transform:scale(1.015);filter:saturate(1.03)}
+.preview-actions{margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+
+.list{margin:0;padding-left:18px;color:#cbd5df}
+.list li{margin:6px 0}
+
+
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{
+  font-size:.86rem;color:#cfe6ff;background:#151c23;border:1px solid rgba(255,255,255,.08);
+  padding:8px 12px;border-radius:999px
+}
+
+
+footer{padding:40px 0;color:#93a4b3;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+
+
+.magnet{transition:transform .08s ease}
+.reduce-motion *{transition:none !important;animation:none !important}
 </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="hero">
-        <h1 data-aos="fade-up">NeuroDot – Dashboard</h1>
-        <p data-aos="fade-up" data-aos-delay="200">AI-powered mental wellness companion</p>
-    </header>
 
-    <!-- ABOUT -->
-    <section class="about" data-aos="fade-up">
-        <h2>About the Project</h2>
-        <p>
-            NeuroDot is a mental wellness dashboard designed to help users improve focus, track mood changes, 
-            and gain emotional well-being insights.
-        </p>
-        <ul>
-            <li>>> Calm, blue-themed UI for a soothing experience</li>
-            <li>>> Interactive mood tracking with EEG wave visuals</li>
-            <li>>> Mood prediction for daily insights</li>
-        </ul>
-    </section>
+<nav>
+  <div class="container nav-inner">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      NeuroDot
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#preview">Preview</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 
-    <!-- DASHBOARD PREVIEW -->
-    <section class="dashboard" data-aos="zoom-in">
-        <h2>Dashboard Preview</h2>
-        <img src="Desktop - 1.png" alt="NeuroDot Dashboard">
-    </section>
+<header class="section hero">
+  <div class="container">
+    <p class="kicker" data-aos="fade-up">AI • Neurotech • Well-being</p>
+    <h1 data-aos="fade-up" data-aos-delay="80">
+      <span id="type" aria-label="AI Mental Wellness Dashboard">AI Mental Wellness Dashboard</span>
+    </h1>
+    <p data-aos="fade-up" data-aos-delay="160">
+      NeuroDot helps users track focus and mood trends, visualize EEG-inspired signals,
+      and get actionable insights powered by lightweight ML models — all in a clear, calm interface.
+    </p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="240">
+      <a class="btn magnet" href="your-live-link" target="_blank" rel="noopener">View Project</a>
+      <a class="btn secondary" href="#about">Learn more</a>
+    </div>
+  </div>
+</header>
 
-    <!-- NEXT STEPS -->
-    <section class="next-steps" data-aos="fade-up">
-        <h2>Next Steps</h2>
-        <ul>
-            <li> >> Convert design to HTML & CSS</li>
-            <li> >> Add hover glow for mood icons</li>
-            <li> >> Animate EEG waves</li>
-            <li> >> Real-time mood prediction</li>
-        </ul>
-    </section>
 
-    <!-- TOOLS -->
-    <section class="tools" data-aos="fade-up">
-        <h2>Tools Used</h2>
-        <p>Figma • Color Styles • Layout Grids</p>
-    </section>
+<section id="about" class="section">
+  <div class="container">
+    <div class="grid">
+      <div class="col-6">
+        <div class="card card-pad" data-aos="fade-up">
+          <h2 style="margin-top:0">What is NeuroDot?</h2>
+          <p style="color:#cbd5df">
+            A focused dashboard for mental wellness — built to monitor daily focus score, mood patterns,
+            and recommendations, with a friendly UI that avoids noise and keeps signals clear.
+          </p>
+          <ul class="list">
+            <li>Clean, blue-toned UI for clarity</li>
+            <li>EEG-inspired wave visualizations</li>
+            <li>Lightweight mood prediction pipeline</li>
+            <li>Accessible, keyboard-navigable controls</li>
+          </ul>
+        </div>
+      </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2025 Komal's Portfolio</p>
-    </footer>
+      <div class="col-6">
+        <div class="grid">
+          <div class="col-12">
+            <div class="card card-pad feature" data-aos="fade-left">
+              <div class="ico">AI</div>
+              <div>
+                <strong>Predictions</strong><br/>
+                Mood & focus estimations using simple, interpretable features.
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card card-pad feature" data-aos="fade-left" data-aos-delay="120">
+              <div class="ico">UX</div>
+              <div>
+                <strong>Calm interface</strong><br/>
+                Minimal cognitive load with readable typography and spacing.
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card card-pad feature" data-aos="fade-left" data-aos-delay="220">
+              <div class="ico">DS</div>
+              <div>
+                <strong>Data visuals</strong><br/>
+                Trend cards, micro-charts, and clear states for quick scans.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+
+<section id="preview" class="section">
+  <div class="container">
+    <div class="card card-pad" data-aos="zoom-in">
+      <h2 style="margin-top:0">Dashboard Preview</h2>
+      <div class="preview-wrap">
+        <img class="preview-img magnet" src="Desktop - 1.png" alt="NeuroDot Dashboard mockup">
+        <div class="preview-actions">
+          <a class="btn magnet" href="your-live-link" target="_blank" rel="noopener">View Project</a>
+          <a class="btn secondary" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="grid">
+      <div class="col-6">
+        <div class="card card-pad" data-aos="fade-up">
+          <h2 style="margin-top:0">Next Steps</h2>
+          <ul class="list">
+            <li>Convert Figma to responsive components</li>
+            <li>Animate wave graph (Canvas/SVG)</li>
+            <li>Hook prediction API for live score</li>
+            <li>Write tests & a11y checks</li>
+          </ul>
+        </div>
+      </div>
+      <div id="stack" class="col-6">
+        <div class="card card-pad" data-aos="fade-up" data-aos-delay="120">
+          <h2 style="margin-top:0">Tech Stack</h2>
+          <div class="badges" aria-label="Tech badges">
+            <span class="badge">Figma</span>
+            <span class="badge">HTML</span>
+            <span class="badge">CSS</span>
+            <span class="badge">JavaScript</span>
+            <span class="badge">Power BI</span>
+            <span class="badge">Python (ML)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="contact" class="section">
+  <div class="container">
+    <div class="card card-pad" data-aos="fade-up">
+      <h2 style="margin-top:0">Contact</h2>
+      <p style="color:#cbd5df;margin-top:0">Collaborations, internships, or feedback — say hi.</p>
+      <form class="grid" onsubmit="event.preventDefault(); alert('Thanks! I’ll get back to you.');">
+        <div class="col-6">
+          <label for="name">Name</label><br/>
+          <input id="name" name="name" class="input" required>
+        </div>
+        <div class="col-6">
+          <label for="email">Email</label><br/>
+          <input id="email" name="email" type="email" class="input" required>
+        </div>
+        <div class="col-12" style="margin-top:10px">
+          <label for="msg">Message</label><br/>
+          <textarea id="msg" name="msg" rows="4" class="input" required></textarea>
+        </div>
+        <div class="col-12" style="margin-top:14px">
+          <button class="btn magnet" type="submit">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2025 NeuroDot</div>
+</footer>
+
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 800, once: true });
+
+
+document.querySelectorAll('.input').forEach(el=>{
+  Object.assign(el.style,{
+    width:'100%', padding:'10px 12px', borderRadius:'10px',
+    border:'1px solid rgba(255,255,255,.08)', background:'#0f1419',
+    color:'var(--text)', outline:'none'
+  });
+  el.addEventListener('focus',()=> el.style.boxShadow='0 0 0 4px var(--ring)');
+  el.addEventListener('blur',()=> el.style.boxShadow='none');
+});
+
+
+(function typeHero(){
+  const el = document.getElementById('type');
+  const phrases = [
+    'AI Mental Wellness Dashboard',
+    'Focus & Mood Insights',
+    'Clear Signals. Calm UI.'
+  ];
+  let p=0,i=0,deleting=false;
+  function tick(){
+    const full = phrases[p];
+    i += deleting ? -1 : 1;
+    el.textContent = full.slice(0, i);
+    if(!deleting && i === full.length){ setTimeout(()=> deleting=true, 1200); }
+    else if(deleting && i === 0){ deleting=false; p=(p+1)%phrases.length; }
+    const speed = deleting ? 40 : 70;
+    setTimeout(tick, speed);
+  }
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  tick();
+})();
+
+
+const magnets = document.querySelectorAll('.magnet');
+magnets.forEach(btn=>{
+  const strength = 14;
+  btn.addEventListener('mousemove', (e)=>{
+    const r = btn.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - .5) * strength;
+    const y = ((e.clientY - r.top) / r.height - .5) * strength;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('mouseleave', ()=> btn.style.transform='translate(0,0)');
+});
+
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.body.classList.add('reduce-motion');
+}
+</script>
 </body>
 </html>
+
+
 
